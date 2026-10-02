@@ -1,14 +1,14 @@
-{
+﻿{
   "id": "HoldYourTurn",
   "name": "HoldYourTurn",
-  "author": "Author",
-  "description": "Slay the Spire 2 mod created from a template for use with BaseLib",
-  "version": "v0.0.0",
+  "author": "snoe1024",
+  "description": "disable your turn end button for a short time after you get additional energy or draw.",
+  "version": "v0.0.4",
   "min_game_version": "0.107.0",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    {"id": "BaseLib", "min_version": "3.3.0"}
+    {"id": "BaseLib", "min_version": "3.4.7"}
   ],
-  "affects_gameplay": true
+  "affects_gameplay": false
 }

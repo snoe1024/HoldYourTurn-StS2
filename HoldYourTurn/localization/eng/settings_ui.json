@@ -1,0 +1,7 @@
+{
+  "HOLDYOURTURN.mod_title": "Hold Your Turn",
+
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "Turn Hold Duration",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Whenever you gain extra Energy or an extra card draw, the End Turn button is locked for the duration set here.",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}s"
+}

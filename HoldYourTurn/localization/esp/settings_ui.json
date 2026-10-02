@@ -1,0 +1,7 @@
+{
+  "HOLDYOURTURN.mod_title": "¡Espera!",
+
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "Duración del bloqueo de turno",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Cuando ganas Energía extra o robas una carta extra, el botón de Fin de turno se bloquea durante el tiempo configurado aquí.",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} s"
+}

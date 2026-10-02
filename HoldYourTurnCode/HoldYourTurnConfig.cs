@@ -1,6 +1,12 @@
-﻿namespace HoldYourTurn.HoldYourTurnCode;
+﻿using BaseLib.Config;
 
-public class HoldYourTurnConfig
+namespace HoldYourTurn.HoldYourTurnCode;
+
+[ConfigHoverTipsByDefault]
+public sealed class HoldYourTurnConfig : SimpleModConfig
 {
+    private const float DefaultHoldTime = 1.5f;
     
+    [ConfigSlider(0.0, 5.0, 0.1, Format = "{0:0.0}sec")]
+    public static float TurnHoldTime { get; set; } = DefaultHoldTime;
 }

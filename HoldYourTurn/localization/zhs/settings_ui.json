@@ -1,0 +1,7 @@
+{
+  "HOLDYOURTURN.mod_title": "别急着结束回合！",
+
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "回合锁定时长",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "当你获得额外能量或额外抽牌时，结束回合按钮会在这里设置的时间内无法按下。",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}秒"
+}

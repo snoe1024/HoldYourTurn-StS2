@@ -1,0 +1,7 @@
+{
+  "HOLDYOURTURN.mod_title": "Подождите!",
+
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "Время блокировки хода",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Когда вы получаете дополнительную энергию или дополнительную карту, кнопка окончания хода блокируется на время, заданное здесь.",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} с"
+}

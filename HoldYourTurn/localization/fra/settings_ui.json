@@ -1,0 +1,7 @@
+{
+  "HOLDYOURTURN.mod_title": "Attendez !",
+
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "Durée de verrouillage du tour",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Lorsque vous gagnez de l'Énergie ou une carte supplémentaire, le bouton Fin de tour est verrouillé pendant la durée définie ici.",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} s"
+}
