@@ -3,5 +3,8 @@
 
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "Время блокировки хода",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Когда вы получаете дополнительную энергию или дополнительную карту, кнопка окончания хода блокируется на время, заданное здесь.",
-  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} с"
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} с",
+
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "Зелья тоже прерывают окончание хода",
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Когда на вас действует зелье, использованное другим игроком, это считается так же, как получение дополнительной энергии или карты: кнопка окончания хода временно блокируется, а в мультиплеере уже завершённый ход отменяется."
 }

@@ -21,6 +21,11 @@ internal static class EndTurnReleasePatch
     private static bool Prefix(NEndTurnButton __instance)
     {
         // Disable後の直接呼び出しも止め、バニラの有効状態とmod条件をANDする。
-        return __instance.IsEnabled && TurnHolder.CanPressTurnEnd;
+        if (!__instance.IsEnabled || !TurnHolder.CanPressTurnEnd)
+            return false;
+
+        // 押した時点を記録し、予約が解決される時にリソース獲得があったかを判定できるようにする。
+        TurnHolder.NotifyEndTurnPressed();
+        return true;
     }
 }

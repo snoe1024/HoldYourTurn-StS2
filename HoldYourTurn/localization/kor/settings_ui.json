@@ -3,5 +3,8 @@
 
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "턴 종료 잠금 시간",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "추가 에너지나 추가 카드 드로우를 얻으면, 여기서 설정한 시간 동안 턴 종료 버튼을 누를 수 없게 됩니다.",
-  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}초"
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}초",
+
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "포션 효과도 턴 종료를 방해",
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "다른 플레이어가 사용한 포션의 영향을 받으면, 추가 에너지나 추가 카드 드로우를 얻은 것과 똑같이 취급합니다. 턴 종료 버튼이 일시적으로 눌리지 않게 되고, 멀티플레이에서는 이미 종료한 턴도 해제됩니다."
 }

@@ -1,0 +1,10 @@
+{
+  "HOLDYOURTURN.mod_title": "ターン終了しないで",
+  
+  "HOLDYOURTURN-TURN_HOLD_TIME.title": "ターン保持時間",
+  "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "あなたが追加エナジーまたは追加ドローを獲得した際、ここに設定した時間の間、ターン終了ボタンが押せなくなります。",
+  "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}秒",
+
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "ポーションの影響でもターン終了を阻害",
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "他のプレイヤーが使ったポーションの影響を受けたとき、追加エナジーや追加ドローの獲得と同様に扱います。ターン終了ボタンが一時的に押せなくなり、マルチプレイでは既に終了していたターンも解除されます。"
+}
