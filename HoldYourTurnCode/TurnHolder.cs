@@ -109,6 +109,7 @@ internal static class TurnHolder
 
     private static void OnCombatEnded()
     {
+        Unsubscribe();
         ResetHold();
     }
 
@@ -149,6 +150,13 @@ internal static class TurnHolder
     /// </summary>
     public static bool ConsumeShouldCancelEndTurn()
     {
+        // 再生アクションは手動の早押し予約ではない。再生前の保留も捨てる。
+        if (RewindCompatibility.IsReplaying)
+        {
+            ResetHold();
+            return false;
+        }
+
         int? atPress = _gainSequenceAtPress;
         _gainSequenceAtPress = null;
 
@@ -216,6 +224,13 @@ internal static class TurnHolder
     /// </summary>
     private static void OnResourceGained(Player player)
     {
+        // 再生で復元されたリソースは、手動プレイでの新規獲得ではない。
+        if (RewindCompatibility.IsReplaying)
+        {
+            ResetHold();
+            return;
+        }
+
         PreventImmediateTurnEnd();
         RequestUndoEndTurnOnGain(player);
     }
