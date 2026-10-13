@@ -5,8 +5,12 @@ Wenn du zusätzliche Energie oder eine zusätzliche Karte ziehst, wird der Zugen
 Erhältst du nach dem Drücken von Zugende noch Energie oder ziehst eine Karte, wird das Zugende rückgängig gemacht.
 In den Mod-Einstellungen kannst du frei festlegen, wie lange der Button gesperrt bleibt. Standardmäßig sind es 1,5 Sekunden.
 
-Ein Freund hat mich um genau so eine Mod gebeten. Ich wollte schon abwinken mit „sowas gibt's doch bestimmt schon zu Dutzenden", aber es gab sie nicht. Also habe ich sie gemacht.
-Im Ernst, warum gab es das noch nicht?
+[b]Experimentelle Funktion: Smart-Modus[/b]
+Du kannst den Smart-Modus in den Mod-Einstellungen aktivieren. (Standardmäßig aus.)
+Er soll verhindern, dass der Zugende-Button gesperrt bleibt, obwohl du nichts mehr tun kannst.
+Hast du keine spielbaren Handkarten und keine Tränke, die das ändern können, wird der Schutz vor Zugende ausgesetzt.
+Der Smart-Modus wird deaktiviert, solange du einen Trank besitzt, den es im Grundspiel nicht gibt.
+Schlage in den Kommentaren weitere Prüfbedingungen vor und hilf, die Funktion zu verbessern.
 
 [b]Unterstützte Zweige[/b]
 Funktioniert sowohl im Standardzweig als auch im Public-Beta-Zweig.

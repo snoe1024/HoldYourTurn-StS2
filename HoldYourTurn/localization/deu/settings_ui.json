@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "Halt!",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "Zugsperre",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Wenn du zusätzliche Energie oder eine zusätzliche Karte ziehst, wird der Zugende-Button für die hier eingestellte Dauer gesperrt.",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} s",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "Tränke unterbrechen das Zugende",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Wenn du von einem Trank eines anderen Spielers betroffen bist, wird das wie zusätzliche Energie oder eine zusätzliche Karte behandelt: Der Zugende-Button wird vorübergehend gesperrt, und im Mehrspielermodus wird ein bereits beendeter Zug wieder aufgehoben."
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Wenn du von einem Trank eines anderen Spielers betroffen bist, wird das wie zusätzliche Energie oder eine zusätzliche Karte behandelt: Der Zugende-Button wird vorübergehend gesperrt, und im Mehrspielermodus wird ein bereits beendeter Zug wieder aufgehoben.",
+  "HOLDYOURTURN-SMART_MODE.title": "Smart-Modus",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "Experimentell: Setzt den Schutz vor Zugende vorübergehend aus, wenn du keine spielbaren Handkarten und keine Tränke hast, die Energie oder zusätzliche Karten geben.\nHilf uns über Workshop-Kommentare, diese Prüfungen zu verbessern."
 }

@@ -5,8 +5,12 @@ Cada vez que ganas Energía extra o robas una carta extra, el botón de Fin de t
 Si ganas Energía o robas una carta después de haber pulsado Fin de turno, se cancela el fin de turno.
 Un ajuste del mod te permite regular libremente cuánto tiempo permanece bloqueado el botón. El valor predeterminado es 1,5 segundos.
 
-Un amigo me pidió un mod así. Estuve a punto de descartarlo con un «seguro que ya existen mil mods de eso», pero no era cierto. Así que lo hice.
-En serio, ¿por qué no existía ya?
+[b]Función experimental: modo inteligente[/b]
+Puedes activar el modo inteligente en los ajustes del mod. (Desactivado por defecto.)
+Busca evitar que el botón de terminar turno siga bloqueado cuando ya no puedes hacer nada.
+Si no tienes cartas que puedas jugar en la mano ni pociones que puedan cambiar esa situación, se suspende la protección de fin de turno.
+El modo inteligente se desactiva mientras tengas una poción que no exista en el juego base.
+Sugiere condiciones adicionales en los comentarios para ayudar a mejorar esta función.
 
 [b]Compatibilidad de ramas[/b]
 Funciona tanto en la rama predeterminada como en la Public Beta.

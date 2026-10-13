@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "¡Espera!",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "Duración del bloqueo de turno",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Cuando ganas Energía extra o robas una carta extra, el botón de Fin de turno se bloquea durante el tiempo configurado aquí.",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} s",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "Las pociones también interrumpen el fin de turno",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Cuando te afecta una poción usada por otro jugador, se trata igual que ganar Energía extra o robar una carta extra: el botón de Fin de turno se bloquea temporalmente y, en multijugador, se deshace un turno que ya habías terminado."
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Cuando te afecta una poción usada por otro jugador, se trata igual que ganar Energía extra o robar una carta extra: el botón de Fin de turno se bloquea temporalmente y, en multijugador, se deshace un turno que ya habías terminado.",
+  "HOLDYOURTURN-SMART_MODE.title": "Modo inteligente",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "Función experimental: suspende temporalmente la protección de fin de turno si no tienes cartas que puedas jugar en la mano ni pociones que den Energía o cartas adicionales.\nAyuda a mejorar estas comprobaciones en los comentarios del Workshop."
 }

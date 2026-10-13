@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "别急着结束回合！",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "回合锁定时长",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "当你获得额外能量或额外抽牌时，结束回合按钮会在这里设置的时间内无法按下。",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}秒",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "药水影响也会打断结束回合",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "受到其他玩家使用的药水影响时，视同获得额外能量或额外抽牌：结束回合按钮会暂时无法按下，多人模式下已经结束的回合也会被取消。"
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "受到其他玩家使用的药水影响时，视同获得额外能量或额外抽牌：结束回合按钮会暂时无法按下，多人模式下已经结束的回合也会被取消。",
+  "HOLDYOURTURN-SMART_MODE.title": "智能模式",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "实验性功能：手中没有可打出的牌，且没有能获得能量或额外手牌的药水时，暂时停用回合结束保护。\n欢迎通过创意工坊评论等方式帮助改进判断条件。"
 }

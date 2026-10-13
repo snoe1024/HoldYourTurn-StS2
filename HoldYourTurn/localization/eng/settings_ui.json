@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "Hold Your Turn",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "Turn Hold Duration",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Whenever you gain extra Energy or an extra card draw, the End Turn button is locked for the duration set here.",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}s",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "Potions Interrupt Turn End",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "When another player uses a potion that affects you, treat it like gaining extra Energy or a card draw: the End Turn button is locked, and in multiplayer your already-ended turn is undone."
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "When another player uses a potion that affects you, treat it like gaining extra Energy or a card draw: the End Turn button is locked, and in multiplayer your already-ended turn is undone.",
+  "HOLDYOURTURN-SMART_MODE.title": "Smart Mode",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "Experimental: temporarily suspends turn-end protection when you have no playable cards in hand and no potions that grant Energy or additional cards.\nPlease help improve these checks through Workshop comments."
 }

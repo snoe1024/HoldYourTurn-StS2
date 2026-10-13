@@ -6,5 +6,8 @@
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0}秒",
 
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "ポーションの影響でもターン終了を阻害",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "他のプレイヤーが使ったポーションの影響を受けたとき、追加エナジーや追加ドローの獲得と同様に扱います。ターン終了ボタンが一時的に押せなくなり、マルチプレイでは既に終了していたターンも解除されます。"
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "他のプレイヤーが使ったポーションの影響を受けたとき、追加エナジーや追加ドローの獲得と同様に扱います。ターン終了ボタンが一時的に押せなくなり、マルチプレイでは既に終了していたターンも解除されます。",
+
+  "HOLDYOURTURN-SMART_MODE.title": "スマートモード",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "実験的機能: 使用可能な手札がなく、エナジー獲得や追加の手札を得るポーションもない場合はターン保持機能を一時停止します。\nワークショップのコメントなどで、判定条件の改善にご協力ください。"
 }

@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "Attendez !",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "Durée de verrouillage du tour",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "Lorsque vous gagnez de l'Énergie ou une carte supplémentaire, le bouton Fin de tour est verrouillé pendant la durée définie ici.",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} s",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "Les potions interrompent aussi la fin de tour",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Lorsque vous êtes affecté par une potion utilisée par un autre joueur, cela est traité comme un gain d'Énergie ou une carte supplémentaire : le bouton Fin de tour est temporairement verrouillé et, en multijoueur, un tour déjà terminé est annulé."
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "Lorsque vous êtes affecté par une potion utilisée par un autre joueur, cela est traité comme un gain d'Énergie ou une carte supplémentaire : le bouton Fin de tour est temporairement verrouillé et, en multijoueur, un tour déjà terminé est annulé.",
+  "HOLDYOURTURN-SMART_MODE.title": "Mode intelligent",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "Fonction expérimentale : suspend temporairement la protection de fin de tour si vous n'avez aucune carte jouable en main ni potion donnant de l'Énergie ou des cartes supplémentaires.\nAidez à améliorer ces vérifications dans les commentaires du Workshop."
 }

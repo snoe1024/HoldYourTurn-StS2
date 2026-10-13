@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Combat.History;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Multiplayer.Game;
@@ -20,7 +21,10 @@ internal static class TurnHolder
     private static readonly Lock TurnHoldLock = new();
     private static CancellationTokenSource? _turnHoldCancellation;
 
-    public static bool CanPressTurnEnd => CombatManager.Instance.IsPlayerReadyToEndTurn(_player!) || CanTurnEnd;
+    public static bool CanPressTurnEnd => RewindCompatibility.IsReplaying || CanSkipProtection || (_player != null && CombatManager.Instance.IsPlayerReadyToEndTurn(_player)) || CanTurnEnd;
+
+    private static bool CanSkipProtection => HoldYourTurnConfig.SmartMode && _player != null
+        && !SmartTurnEndEvaluator.ShouldProtectTurnEnd(_player);
 
     private static bool _canTurnEnd;
     public static bool CanTurnEnd
@@ -34,7 +38,7 @@ internal static class TurnHolder
 
     private static Player? _player;
 
-    /// <summary>リソース獲得(追加ドロー/エネルギー増加)を検知するたびに増える通し番号。</summary>
+    /// <summary>リソース獲得(手札追加/エネルギー増加)を検知するたびに増える通し番号。</summary>
     private static int _gainSequence;
 
     /// <summary>ターン終了ボタンを押した時点での<see cref="_gainSequence"/>。未記録なら<c>null</c>。</summary>
@@ -54,7 +58,7 @@ internal static class TurnHolder
     }
     
     /// <summary>購読中のプレイヤーごとのイベントハンドラ(次の戦闘で確実に解除するため)。</summary>
-    private static readonly List<(Player Player, Action<int, int> Energy)> Subscriptions = new();
+    private static readonly List<(Player Player, Action<int, int> Energy, CardPile Hand, Action<CardModel> CardAdded)> Subscriptions = new();
 
     private static void OnCombatSetUp(CombatState state)
     {
@@ -78,8 +82,11 @@ internal static class TurnHolder
                     Guard(() => OnResourceGained(captured));
                 }
             };
+            CardPile hand = captured.PlayerCombatState!.Hand;
+            Action<CardModel> cardAdded = card => Guard(() => OnHandCardAdded(captured, card));
+            hand.CardAdded += cardAdded;
             captured.PlayerCombatState.EnergyChanged += energy;
-            Subscriptions.Add((captured, energy));
+            Subscriptions.Add((captured, energy, hand, cardAdded));
             _player = player;
             break;
         }
@@ -89,8 +96,9 @@ internal static class TurnHolder
 
     private static void Unsubscribe()
     {
-        foreach (var (player, energy) in Subscriptions)
+        foreach (var (player, energy, hand, cardAdded) in Subscriptions)
         {
+            hand.CardAdded -= cardAdded;
             if (player.PlayerCombatState != null)
             {
                 player.PlayerCombatState.EnergyChanged -= energy;
@@ -161,7 +169,7 @@ internal static class TurnHolder
         _gainSequenceAtPress = null;
 
         // ボタン経由でない終了(FTUE等)は押下記録が無いので、従来どおり保留中かどうかで判断する。
-        return atPress.HasValue ? atPress.Value != _gainSequence : !_canTurnEnd;
+        return !CanSkipProtection && (atPress.HasValue ? atPress.Value != _gainSequence : !_canTurnEnd);
     }
 
     private static void OnHistoryChanged()
@@ -192,9 +200,22 @@ internal static class TurnHolder
         }
     }
 
+    /// <summary>プレイ中の手札追加を検知する。生成・回収・追加ドローを同じ経路で扱う。</summary>
+    private static void OnHandCardAdded(Player player, CardModel card)
+    {
+        if (!CombatManager.Instance.IsInProgress
+            || player.Creature.CombatState?.CurrentSide != CombatSide.Player
+            || player.PlayerCombatState?.Phase != PlayerTurnPhase.Play
+            || !LocalContext.IsMe(card.Owner))
+            return;
+
+        OnResourceGained(player);
+    }
+
+    // プレイ中のドローはCardAddedで検知済み。開始時の通常配札は履歴側でも除外される。
     private static void OnCardDrawn(CardDrawnEntry entry)
     {
-        if (LocalContext.IsMe(entry.Card.Owner))
+        if (LocalContext.IsMe(entry.Card.Owner) && entry.Card.Owner.PlayerCombatState?.Phase != PlayerTurnPhase.Play)
         {
             OnResourceGained(entry.Card.Owner);
         }
@@ -219,8 +240,8 @@ internal static class TurnHolder
     }
 
     /// <summary>
-    /// 追加リソース(追加ドロー/エネルギー増加、設定が有効なら他プレイヤーのポーションの影響)をプレイヤーが獲得した。
-    /// このメソッドは全ピアで、全プレイヤー分について、同じゲームアクションの同じ時点で呼ばれる。
+    /// 追加リソース(手札追加/エネルギー増加、設定が有効なら他プレイヤーのポーションの影響)をプレイヤーが獲得した。
+    /// ローカルプレイヤーの獲得だけを扱う。解除は正規アクションで配信する。
     /// </summary>
     private static void OnResourceGained(Player player)
     {
@@ -228,6 +249,19 @@ internal static class TurnHolder
         if (RewindCompatibility.IsReplaying)
         {
             ResetHold();
+            return;
+        }
+
+        if (CanSkipProtection)
+        {
+            // 獲得記録は維持し、今不要な待ち時間だけを解除する。
+            _gainSequence++;
+            lock (TurnHoldLock)
+            {
+                _turnHoldCancellation?.Cancel();
+                _turnHoldCancellation = null;
+                EnableTurnEnd(true);
+            }
             return;
         }
 

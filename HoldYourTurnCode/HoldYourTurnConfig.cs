@@ -12,4 +12,7 @@ public sealed class HoldYourTurnConfig : SimpleModConfig
 
     /// <summary>他のプレイヤーが使ったポーションの影響を受けたときも、追加リソース獲得と同様に扱う(既定は無効)。</summary>
     public static bool PotionInterruptsTurnEnd { get; set; } = false;
+
+    /// <summary>手札の使用・コスト改善・追加の手札獲得手段がない場合は防止を省く。</summary>
+    public static bool SmartMode { get; set; } = false;
 }

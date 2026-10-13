@@ -1,10 +1,10 @@
 {
   "HOLDYOURTURN.mod_title": "別急著結束回合！",
-
   "HOLDYOURTURN-TURN_HOLD_TIME.title": "回合鎖定時長",
   "HOLDYOURTURN-TURN_HOLD_TIME.hover.desc": "當你獲得額外能量或額外抽牌時，結束回合按鈕會在這裡設定的時間內無法按下。",
   "HOLDYOURTURN-TURN_HOLD_TIME.sliderFormat": "{0:0.0} 秒",
-
   "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.title": "藥水影響也會打斷結束回合",
-  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "受到其他玩家使用的藥水影響時，視同獲得額外能量或額外抽牌：結束回合按鈕會暫時無法按下，多人模式下已經結束的回合也會被取消。"
+  "HOLDYOURTURN-POTION_INTERRUPTS_TURN_END.hover.desc": "受到其他玩家使用的藥水影響時，視同獲得額外能量或額外抽牌：結束回合按鈕會暫時無法按下，多人模式下已經結束的回合也會被取消。",
+  "HOLDYOURTURN-SMART_MODE.title": "智慧模式",
+  "HOLDYOURTURN-SMART_MODE.hover.desc": "實驗性功能：手中沒有可打出的牌，且沒有能獲得能量或額外手牌的藥水時，暫時停用回合結束保護。\n歡迎透過工作坊留言等方式協助改善判斷條件。"
 }
