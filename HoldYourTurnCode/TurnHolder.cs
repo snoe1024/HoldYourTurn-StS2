@@ -21,7 +21,7 @@ internal static class TurnHolder
     private static readonly Lock TurnHoldLock = new();
     private static CancellationTokenSource? _turnHoldCancellation;
 
-    public static bool CanPressTurnEnd => RewindCompatibility.IsReplaying || CanSkipProtection || (_player != null && CombatManager.Instance.IsPlayerReadyToEndTurn(_player)) || CanTurnEnd;
+    public static bool CanPressTurnEnd => !(_player != null && ForcedTurnEndGuard.IsForced(_player) && CombatManager.Instance.IsPlayerReadyToEndTurn(_player)) && (RewindCompatibility.IsReplaying || CanSkipProtection || (_player != null && CombatManager.Instance.IsPlayerReadyToEndTurn(_player)) || CanTurnEnd);
 
     private static bool CanSkipProtection => HoldYourTurnConfig.SmartMode && _player != null
         && !SmartTurnEndEvaluator.ShouldProtectTurnEnd(_player);
@@ -62,6 +62,7 @@ internal static class TurnHolder
 
     private static void OnCombatSetUp(CombatState state)
     {
+        ForcedTurnEndGuard.Clear();
         ResetHold();
         Unsubscribe();
         _player = null;
@@ -117,6 +118,7 @@ internal static class TurnHolder
 
     private static void OnCombatEnded()
     {
+        ForcedTurnEndGuard.Clear();
         Unsubscribe();
         ResetHold();
     }
@@ -140,9 +142,16 @@ internal static class TurnHolder
     /// ローカルプレイヤーがターン終了ボタンを押した(アクションを積んだ)ことを記録する。
     /// これ以降、予約が解決されるまでにリソースを獲得していたら、その予約を取り消す対象にする。
     /// </summary>
+    public static void NotifyForcedEndTurn(Player player)
+    {
+        ForcedTurnEndGuard.Record(player);
+        // 先行する通常終了予約の記録・保留タイマーを捨てる。Ready状態には触らない。
+        ResetHold();
+    }
+
     public static void NotifyEndTurnPressed()
     {
-        if (_player == null || CombatManager.Instance.IsPlayerReadyToEndTurn(_player))
+        if (_player == null || ForcedTurnEndGuard.IsForced(_player) || CombatManager.Instance.IsPlayerReadyToEndTurn(_player))
         {
             // 既に終了予約済みなら、この押下は「取り消し」なので記録しない。
             return;
@@ -169,7 +178,7 @@ internal static class TurnHolder
         _gainSequenceAtPress = null;
 
         // ボタン経由でない終了(FTUE等)は押下記録が無いので、従来どおり保留中かどうかで判断する。
-        return !CanSkipProtection && (atPress.HasValue ? atPress.Value != _gainSequence : !_canTurnEnd);
+        return !(_player != null && ForcedTurnEndGuard.IsForced(_player)) && !CanSkipProtection && (atPress.HasValue ? atPress.Value != _gainSequence : !_canTurnEnd);
     }
 
     private static void OnHistoryChanged()
@@ -245,6 +254,9 @@ internal static class TurnHolder
     /// </summary>
     private static void OnResourceGained(Player player)
     {
+        if (ForcedTurnEndGuard.IsForced(player))
+            return;
+
         // 再生で復元されたリソースは、手動プレイでの新規獲得ではない。
         if (RewindCompatibility.IsReplaying)
         {
@@ -277,7 +289,7 @@ internal static class TurnHolder
     /// </summary>
     private static void RequestUndoEndTurnOnGain(Player player)
     {
-        if (_undoRequested || RunManager.Instance.NetService.Type == NetGameType.Singleplayer)
+        if (ForcedTurnEndGuard.IsForced(player) || _undoRequested || RunManager.Instance.NetService.Type == NetGameType.Singleplayer)
         {
             return;
         }

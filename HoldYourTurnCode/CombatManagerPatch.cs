@@ -29,6 +29,10 @@ internal static class SetReadyToEndTurnPatch
     {
         __state = false;
 
+        // 終了後のリソース獲得でも解除しないよう、強制終了を記録する。
+        if (!canBackOut && LocalContext.IsMe(player))
+            TurnHolder.NotifyForcedEndTurn(player);
+
         // 強制・不可逆の終了はバニラに任せる。他プレイヤー分は絶対に触らない。
         if (!canBackOut || !LocalContext.IsMe(player))
         {
@@ -55,7 +59,7 @@ internal static class SetReadyToEndTurnPatch
     [HarmonyPostfix]
     private static void Postfix(Player player, bool __state)
     {
-        if (!__state || !IsReady(player))
+        if (!__state || ForcedTurnEndGuard.IsForced(player) || !IsReady(player))
         {
             return;
         }
