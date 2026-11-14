@@ -69,7 +69,7 @@ internal static class TurnHolder
 
     private static Player? _player;
 
-    /// <summary>リソース獲得(手札追加/エネルギー増加)を検知するたびに増える通し番号。</summary>
+    /// <summary>リソース獲得(手札追加/エネルギー増加/値下げによる使用可能化)を検知するたびに増える通し番号。</summary>
     private static int _gainSequence;
 
     /// <summary>ターン終了ボタンを押した時点での<see cref="_gainSequence"/>。未記録なら<c>null</c>。</summary>
@@ -77,6 +77,9 @@ internal static class TurnHolder
 
     /// <summary>獲得による解除アクションを積んだが、まだ解決されていない間は真(同じ獲得列で二重に積まない)。</summary>
     private static bool _undoRequested;
+    private static readonly HandCostReductionTracker CostReductions = new();
+    private static ActionExecutor? _costCheckExecutor;
+    private static bool _checkingCosts;
 
     public static void Initialize()
     {
@@ -89,7 +92,7 @@ internal static class TurnHolder
     }
     
     /// <summary>購読中のプレイヤーごとのイベントハンドラ(次の戦闘で確実に解除するため)。</summary>
-    private static readonly List<(Player Player, Action<int, int> Energy, CardPile Hand, Action<CardModel> CardAdded)> Subscriptions = new();
+    private static readonly List<(Player Player, Action<int, int> Energy, Action<int, int> Stars, CardPile Hand, Action<CardModel> CardAdded, Action<CardModel> CardRemoved)> Subscriptions = new();
 
     private static void OnCombatSetUp(CombatState state)
     {
@@ -109,31 +112,49 @@ internal static class TurnHolder
             Player captured = player;
             Action<int, int> energy = (previous, current) =>
             {
+                // 支払いで使用不可になった状態も、後の値下げとの比較元にする。
+                Guard(CheckForCostReduction);
                 if (previous < current)
                 {
                     Guard(() => OnResourceGained(captured));
                 }
             };
             CardPile hand = captured.PlayerCombatState!.Hand;
+            Action<int, int> stars = (_, _) => Guard(CheckForCostReduction);
             Action<CardModel> cardAdded = card => Guard(() => OnHandCardAdded(captured, card));
+            Action<CardModel> cardRemoved = _ => Guard(CheckForCostReduction);
             hand.CardAdded += cardAdded;
+            hand.CardRemoved += cardRemoved;
             captured.PlayerCombatState.EnergyChanged += energy;
-            Subscriptions.Add((captured, energy, hand, cardAdded));
+            captured.PlayerCombatState.StarsChanged += stars;
+            Subscriptions.Add((captured, energy, stars, hand, cardAdded, cardRemoved));
             _player = player;
             break;
         }
 
+        _costCheckExecutor = RunManager.Instance.ActionExecutor;
+        _costCheckExecutor.BeforeActionExecuted += OnActionForCostCheck;
+        _costCheckExecutor.AfterActionExecuted += OnActionForCostCheck;
         _processedHistoryEntries = CombatManager.Instance.History.Entries.Count();
     }
 
     private static void Unsubscribe()
     {
-        foreach (var (player, energy, hand, cardAdded) in Subscriptions)
+        if (_costCheckExecutor != null)
+        {
+            _costCheckExecutor.BeforeActionExecuted -= OnActionForCostCheck;
+            _costCheckExecutor.AfterActionExecuted -= OnActionForCostCheck;
+            _costCheckExecutor = null;
+        }
+        CostReductions.Clear();
+        foreach (var (player, energy, stars, hand, cardAdded, cardRemoved) in Subscriptions)
         {
             hand.CardAdded -= cardAdded;
+            hand.CardRemoved -= cardRemoved;
             if (player.PlayerCombatState != null)
             {
                 player.PlayerCombatState.EnergyChanged -= energy;
+                player.PlayerCombatState.StarsChanged -= stars;
             }
         }
         Subscriptions.Clear();
@@ -188,6 +209,8 @@ internal static class TurnHolder
             return;
         }
 
+        // 押す前に成立済みの値下げを、押した後の獲得と誤認しない。
+        Guard(CheckForCostReduction);
         _gainSequenceAtPress = _gainSequence;
     }
 
@@ -205,6 +228,8 @@ internal static class TurnHolder
             return false;
         }
 
+        // 履歴を伴わない条件変更も、予約解決前に同期的に確認する。
+        Guard(CheckForCostReduction);
         int? atPress = _gainSequenceAtPress;
         _gainSequenceAtPress = null;
 
@@ -238,6 +263,35 @@ internal static class TurnHolder
                     break;
             }
         }
+        CheckForCostReduction();
+    }
+
+    private static void OnActionForCostCheck(GameAction _) => Guard(CheckForCostReduction);
+
+    /// <summary>Play中の値下げによる使用可能化を、既存の獲得・解除経路へ合流させる。</summary>
+    private static void CheckForCostReduction()
+    {
+        if (_checkingCosts)
+            return;
+        _checkingCosts = true;
+        try
+        {
+            Player? player = _player;
+            CombatManager combat = CombatManager.Instance;
+            if (player == null || !combat.IsInProgress || !combat.IsPartOfPlayerTurn(player)
+                || player.PlayerCombatState?.Phase != PlayerTurnPhase.Play
+                || player.Creature.IsDead || ForcedTurnEndGuard.IsForced(player) || RewindCompatibility.IsReplaying)
+            {
+                CostReductions.Clear();
+                return;
+            }
+            if (CostReductions.Observe(player))
+                OnResourceGained(player);
+        }
+        finally
+        {
+            _checkingCosts = false;
+        }
     }
 
     /// <summary>プレイ中の手札追加を検知する。生成・回収・追加ドローを同じ経路で扱う。</summary>
@@ -249,6 +303,7 @@ internal static class TurnHolder
             || !LocalContext.IsMe(card.Owner))
             return;
 
+        CheckForCostReduction();
         OnResourceGained(player);
     }
 

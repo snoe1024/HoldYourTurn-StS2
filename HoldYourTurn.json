@@ -3,12 +3,12 @@
   "name": "HoldYourTurn",
   "author": "snoe1024",
   "description": "disable your turn end button for a short time after you get additional energy or draw.",
-  "version": "v0.2.3",
+  "version": "v0.3.1",
   "min_game_version": "0.107.0",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    {"id": "BaseLib", "min_version": "3.4.7"}
+    {"id": "BaseLib", "min_version": "3.4.8"}
   ],
   "affects_gameplay": false
 }

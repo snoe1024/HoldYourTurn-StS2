@@ -52,7 +52,7 @@ internal static class SetReadyToEndTurnPatch
         }
 
         // SetReadyToEndTurnを実行せず、UI側にも「ターンを戻した」通知を通す。
-        __instance.UndoReadyToEndTurn(player);
+        CombatTurnCompatibility.UndoReadyToEndTurn(__instance, player);
         return false;
     }
 
