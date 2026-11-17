@@ -27,7 +27,7 @@ internal static class SmartTurnEndEvaluator
                 starsBlocked |= (reason & UnplayableReason.StarCostTooHigh) != 0;
             }
 
-            if (!PotionUseCompatibility.CanUsePotions(player))
+            if (!player.CanUseOrRemovePotions)
                 return false;
 
             foreach (PotionModel potion in player.Potions)

@@ -23,7 +23,6 @@ public partial class MainFile : Node
         var assembly = Assembly.GetExecutingAssembly();
         
         CombatTurnCompatibility.Initialize();
-        PotionUseCompatibility.Initialize();
 
         Config = new HoldYourTurnConfig();
         Config.Load();
